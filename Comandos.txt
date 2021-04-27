@@ -1,0 +1,12 @@
+W: Andar para cima
+S: Andar para baixo
+A: Andar para a esquerda
+D: Andar para a direita
+
+I: Atirar para cima
+K: Atirar para baixo
+J: Atirar para a esquerda
+L: Atirar para a direita
+
+P: Pausa o jogo
+ESC: Fecha o jogo

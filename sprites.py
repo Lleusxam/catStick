@@ -7,7 +7,7 @@ from tilemap import collide_hit_rect
 import pytweening as tween
 vec = pg.math.Vector2
 
-# Colisãodas paredes
+# Colisão das paredes
 def collide_with_walls(sprite, group, dir):
     if dir == 'x':
         hits = pg.sprite.spritecollide(sprite, group, False, collide_hit_rect)
@@ -229,7 +229,7 @@ class Mob(pg.sprite.Sprite):
         self.health_bar = pg.Rect(0, 0, width, 7)
         if self.health < 100:
             pg.draw.rect(self.image, col, self.health_bar)
-#Classe obstáculos
+# Classe obstáculos
 class Obstacle(pg.sprite.Sprite):
     def __init__(self, game, x, y, w, h):
         self.groups = game.walls

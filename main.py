@@ -57,10 +57,6 @@ class Game:
         "''' SPRITES DAS ARMAS/BALAS '''"
         weapons_img_folder = path.join(game_folder, 'sprites/Weapons')
         self.bullet_img = pg.image.load(path.join(weapons_img_folder, BULLET_IMG)).convert_alpha()
-        "''' SPRITES DAS PAREDES '''"
-        walls_img_folder = path.join(game_folder, 'sprites/Walls')
-        self.wall_img = pg.image.load(path.join(walls_img_folder, WALL_IMG)).convert_alpha()
-        self.wall_img = pg.transform.scale(self.wall_img, (TILESIZE, TILESIZE))
         "''' SPRITES DOS MOBS''' "
         mobs_img_folder = path.join(game_folder, 'sprites/Mobs')
         self.mob_img = pg.image.load(path.join(mobs_img_folder, MOB_IMG_R)).convert_alpha()
@@ -143,9 +139,11 @@ class Game:
         # Update do gameLoop
         self.all_sprites.update()
         self.camera.update(self.player)
+        
         #Fim de jogo
-        if len(self.mobs) == 0:
+        if len(self.mobs) == 0 and len(self.items) == 0:
             self.playing = False
+            g.show_win_screen()
 
         
 
@@ -156,18 +154,18 @@ class Game:
             hit.vel = vec(0, 0)
             if self.player.health <= 0:
                 self.playing = False
+                g.show_death_screen()
         if hits:
             self.player.pos += vec(MOB_KNOCKBACK, 0).rotate(-hits[0].rot)
         # Colisão projéteis com os monstros
         hits = pg.sprite.groupcollide(self.mobs, self.bullets, False, True)
         for hit in hits:
             hit.health -= BULLET_DAMAGE
-            print(BULLET_DAMAGE)
             hit.vel = vec(0, 0)
         # Colisão do player com os itens
         hits = pg.sprite.spritecollide(self.player, self.items, False)
         for hit in hits:
-            if hit.type == 'health' and self.player.health < PLAYER_HEALTH:
+            if hit.type == 'health' and self.player.health <= PLAYER_HEALTH:
                 hit.kill()
                 self.player.add_health(HEALTH_PACK_AMOUNT) 
 
@@ -181,9 +179,11 @@ class Game:
         draw_player_health(self.screen, 10, 10, self.player.health / PLAYER_HEALTH )
         self.draw_text('Bruxas: {}'.format(len(self.mobs)), self.title_font, 30, WHITE,
                        WIDTH - 10, 10, align="ne")
+        self.draw_text('Leites: {}'.format(len(self.items)), self.title_font, 30, LIGHTGREY,
+                       WIDTH - 10, 50, align="ne")
         if self.paused:
             self.screen.blit(self.dim_screen, (0, 0))
-            self.draw_text("Paused",self.title_font, 105, RED, WIDTH/2, HEIGHT/2, align="center" )
+            self.draw_text("Pausa",self.title_font, 105, RED, WIDTH/2, HEIGHT/2, align="center" )
         pg.display.flip()
 
     def events(self):
@@ -201,9 +201,51 @@ class Game:
         pass
 
 
-    # Método mostrar textos na tela
-    def show_go_screen(self):
+    def show_start_screen(self):
+
         self.screen.fill(BLACK)
+        self.draw_text("Comandos", self.title_font, 50, LIGHTGREY, 
+                        WIDTH /2, HEIGHT /2 -220, align="center")
+        self.draw_text("W: cima", self.title_font, 30, LIGHTGREY, 
+                        WIDTH /2, HEIGHT /2 -170, align="center")
+        self.draw_text("S: baixo", self.title_font, 30, LIGHTGREY, 
+                        WIDTH /2, HEIGHT /2 -120, align="center")
+        self.draw_text("A: esquerda", self.title_font, 30, LIGHTGREY, 
+                        WIDTH /2, HEIGHT /2 -70, align="center")
+        self.draw_text("D: direita", self.title_font, 30, LIGHTGREY, 
+                        WIDTH /2, HEIGHT /2 -20, align="center")
+        
+        self.draw_text("I: atirar cima", self.title_font, 30, LIGHTGREY, 
+                        WIDTH /2, HEIGHT /2 + 30, align="center")
+        self.draw_text("K: atirar baixo", self.title_font, 30, LIGHTGREY, 
+                        WIDTH /2, HEIGHT /2 +80, align="center")
+        self.draw_text("J: atirar esquerda", self.title_font, 30, LIGHTGREY, 
+                        WIDTH /2, HEIGHT /2 +130, align="center")
+        self.draw_text("L: atirar direita", self.title_font, 30, LIGHTGREY, 
+                        WIDTH /2, HEIGHT /2 +180, align="center")
+
+        self.draw_text("Pressione qualquer tecla para iniciar", self.title_font, 40, RED, 
+                        WIDTH /2, HEIGHT /2 +240, align="center")
+        self.musicPath = path.dirname(__file__)+'/music.mp3'
+        pg.mixer_music.load(self.musicPath)
+        
+        print(self.musicPath)
+        pg.mixer_music.play()
+        pg.display.flip()
+        self.wait_for_key()
+
+
+    # Método mostrar textos na tela
+    def show_win_screen(self):
+        self.screen.fill(BLACK)
+        self.draw_text("Parabéns!!", self.title_font, 100, RED, 
+                        WIDTH /2, HEIGHT /2, align="center")
+        self.draw_text("Tecle para reiniciar", self.title_font, 75, WHITE,
+                         WIDTH/2, HEIGHT*3/4, align="center" )
+        pg.display.flip()
+        self.wait_for_key()
+
+    def show_death_screen(self):
         self.draw_text("GAME OVER", self.title_font, 100, RED, 
                         WIDTH /2, HEIGHT /2, align="center")
         self.draw_text("Tecle para reiniciar", self.title_font, 75, WHITE,
@@ -229,4 +271,3 @@ g.show_start_screen()
 while True:
     g.new()
     g.run()
-    g.show_go_screen()

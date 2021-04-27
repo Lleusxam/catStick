@@ -11,11 +11,12 @@ RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
 AQUA_BLUE = (24,35,71)
 # Configurações da tela
-WIDTH = 1024   # 16 * 64 or 32 * 32 or 64 * 16
-HEIGHT = 720  # 16 * 48 or 32 * 24 or 64 * 12
+WIDTH = 1024   # 16 * 64 ou 32 * 32 ou 64 * 16
+HEIGHT = 720  # 16 * 48 ou 32 * 24 ou 64 * 12
 FPS = 60
-TITLE = "Tilemap Demo"
+TITLE = "Cat Stick"
 BGCOLOR = AQUA_BLUE
+TEXTO_DISPLAY = ""
 
 TILESIZE = 1
 GRIDWIDTH = WIDTH / TILESIZE
@@ -23,13 +24,13 @@ GRIDHEIGHT = HEIGHT / TILESIZE
 
 # Config dos projéteis
 BULLET_IMG = 'stickAttack.png'
-BULLET_SPEED = 500
+BULLET_SPEED = 700
 BULLET_LIFETIME = 1000
 BULLET_RATE = 400
 BULLET_SIZE = 19
 BULLET_COLOR = (15,15,15)
 BARREL_OFFSET = vec(0, 0)   # (27,24) ; (0,0)
-BULLET_DAMAGE = 15
+BULLET_DAMAGE = 30
 bullets = []
 
 GUN_SPREAD = 5
@@ -43,7 +44,7 @@ EFFECTS_LAYER = 4
 ITEMS_LAYER = 1
 
 MOUSE = pg.mouse.get_pos()
-MOUSE_STATE = False
+MOUSE_STATE = True
 
 
 # Player settings
@@ -63,17 +64,17 @@ WALL_IMG = 'wall_mid.png'
 # Mob settings
 MOB_HEALTH = 100
 MOB_DAMAGE = 10
-MOB_KNOCKBACK = 10
+MOB_KNOCKBACK = 15
 MOB_IMG_R = 'theWitchR.png'
 MOB_IMG_L = 'theWitchL.png'
 MOB_SIZE = 3
-MOB_SPEEDS = [250, 200, 175, 225, 500]
+MOB_SPEEDS = [350, 300, 275, 325, 600, 650]
 MOB_HIT_RECT = pg.Rect(0, 0, 30, 30)
-AVOID_RADIUS = 50
+AVOID_RADIUS = 100
 SPLAT = 'witch_dead6.png'
 
 #Item settings
 ITEM_IMAGES = {'health': 'milk.png'}
-HEALTH_PACK_AMOUNT = 20
+HEALTH_PACK_AMOUNT = 5
 P_RANGE = 20
 P_SPEED = 0.6
