@@ -226,7 +226,7 @@ class Game:
 
         self.draw_text("Pressione qualquer tecla para iniciar", self.title_font, 40, RED, 
                         WIDTH /2, HEIGHT /2 +240, align="center")
-        self.musicPath = path.dirname(__file__)+'/music.mp3'
+        self.musicPath = path.join(path.dirname(__file__), 'music.mp3')
         pg.mixer_music.load(self.musicPath)
         
         print(self.musicPath)
