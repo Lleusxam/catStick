@@ -215,14 +215,8 @@ class Game:
         self.draw_text("D: direita", self.title_font, 30, LIGHTGREY, 
                         WIDTH /2, HEIGHT /2 -20, align="center")
         
-        self.draw_text("I: atirar cima", self.title_font, 30, LIGHTGREY, 
+        self.draw_text("Clique esquerdo: atirar", self.title_font, 30, LIGHTGREY,
                         WIDTH /2, HEIGHT /2 + 30, align="center")
-        self.draw_text("K: atirar baixo", self.title_font, 30, LIGHTGREY, 
-                        WIDTH /2, HEIGHT /2 +80, align="center")
-        self.draw_text("J: atirar esquerda", self.title_font, 30, LIGHTGREY, 
-                        WIDTH /2, HEIGHT /2 +130, align="center")
-        self.draw_text("L: atirar direita", self.title_font, 30, LIGHTGREY, 
-                        WIDTH /2, HEIGHT /2 +180, align="center")
 
         self.draw_text("Pressione qualquer tecla para iniciar", self.title_font, 40, RED, 
                         WIDTH /2, HEIGHT /2 +240, align="center")

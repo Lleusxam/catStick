@@ -71,42 +71,22 @@ class Player(pg.sprite.Sprite):
             self.vel.y = PLAYER_SPEED
         if self.vel.x != 0 and self.vel.y != 0:
             self.vel *= 0.7071
-        if keys[pg.K_j]:
-            if self.image == self.imageR:
-                self.image = self.imageL
-            self.rot = 180
-            now = pg.time.get_ticks()
-            if now - self.last_shot > BULLET_RATE:
+        if pg.mouse.get_pressed()[0]:
+            mouse_screen = vec(pg.mouse.get_pos())
+            world_mouse = mouse_screen - vec(self.game.camera.camera.topleft)
+            diff = world_mouse - self.pos
+            if diff.length() > 0:
+                dir = diff.normalize()
+                if dir.x < 0:
+                    self.image = self.imageL
+                else:
+                    self.image = self.imageR
+                self.rot = vec(1, 0).angle_to(dir)
+                now = pg.time.get_ticks()
+                if now - self.last_shot > BULLET_RATE:
                     self.last_shot = now
-                    dir = vec(1,0).rotate(-self.rot)
                     pos = self.pos + BARREL_OFFSET
                     Bullet(self.game, pos, dir, self.rot)
-        if keys[pg.K_l]:
-            if self.image == self.imageL:
-                self.image = self.imageR
-            self.rot = 0
-            now = pg.time.get_ticks()
-            if now - self.last_shot > BULLET_RATE:
-                self.last_shot = now
-                dir = vec(1,0).rotate(-self.rot)
-                pos = self.pos + BARREL_OFFSET
-                Bullet(self.game, pos, dir, self.rot)
-        if keys[pg.K_k]:
-            self.rot = 270
-            now = pg.time.get_ticks()
-            if now - self.last_shot > BULLET_RATE:
-                self.last_shot = now
-                dir = vec(1,0).rotate(-self.rot)
-                pos = self.pos + BARREL_OFFSET
-                Bullet(self.game, pos, dir, self.rot)
-        if keys[pg.K_i]:
-            self.rot = 90
-            now = pg.time.get_ticks()
-            if now - self.last_shot > BULLET_RATE:
-                self.last_shot = now
-                dir = vec(1,0).rotate(-self.rot)
-                pos = self.pos + BARREL_OFFSET
-                Bullet(self.game, pos, dir, self.rot)
 
     def update(self):
         self.get_keys()
